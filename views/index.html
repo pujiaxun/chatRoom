@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chat Room</title>
+    <link rel="stylesheet"  href="style.css">
+
+  </head>
+  <body>
+    <div class="pages">
+      <div class="chat page">
+        <div class="userArea">
+          <ul class="users">
+            <li v-for="item in items">
+              {{ item.username }}
+            </li>
+          </ul>
+        </div>
+        <div class="chatArea">
+          <ul class="messages" >
+            <li v-for="item in items">
+              {{ item.username }}: {{ item.message }}
+            </li>
+          </ul>
+        </div>
+        <div>
+          <input class="inputMessage" type="text" v-on:keyup.13="send" v-model="message">
+        </div>
+      </div>
+      <div class="login page" id="loginPage">
+        <div class="welcome" >
+          <h3 class="title">{{ welcome }}</h3>
+          <input class="loginButton" type="button" value="{{ value }}" @click="login">
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script type="text/javascript" src="vue.js" ></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="main.js" ></script>
+
+</html>
