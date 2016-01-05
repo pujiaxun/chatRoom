@@ -19,6 +19,7 @@ html,input{
 
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -60,16 +61,24 @@ ul {
 }
 
 .chat.page{
-  margin: 50px;
+  /*margin: 50px;*/
 }
 
 .userArea{
-  width: 300px;
+  width: 20%;
+  height: 100%;
   background-color: #2af999;
   float: left;
 }
 .chatArea{
-  width: 500px;
+  width: 80%;
+  height: 90%;
   background-color: #abcccf;
-  float: left;
+  float: right;
+}
+.inputMessage {
+    float: right;
+    /*clear: left;*/
+    width: 80%;
+    height: 10%;
 }

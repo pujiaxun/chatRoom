@@ -1,4 +1,13 @@
-username = 'initname'
+var nicknameList = [
+  'Jack','Jason','Jim','Alice','Sherly',
+  'Ben','James','Mike','Jay','Lucy','Kate'
+]
+
+var socket = io.connect();
+//随机选择昵称
+username = nicknameList[Math.floor(Math.random()*10)]
+//通知服务器随机选到的名字
+socket.emit('add user',username)
 
 new Vue({
   el: '.title',
@@ -53,9 +62,15 @@ var inputMessage = new Vue({
   }
 })
 
+//先渲染以前保存的数条消息
+function lastChatMessage (data){
+  messagesList.items = (data.lastInfo)
+}
+
 function addChatMessage (data){
   messagesList.items.push(data)
 }
+
 function sendMessage(){
   var message = inputMessage.message
   //清空输入框
@@ -66,15 +81,13 @@ function sendMessage(){
   })
   socket.emit('new message',message)
 }
-// 发布一条消息
-function log (message, options) {
-  //还么写好
-  var $el = $('<li>').addClass('log').text(message);
-  addMessageElement($el, options);
-}
 
-var socket = io.connect();
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+  socket.on('last message',function(data){
+    console.log("客户端监听到了new message");
+    lastChatMessage(data)
+  })
+
+  socket.on('new message',function(data){
+    console.log("客户端监听到了new message");
+    addChatMessage(data)
+  })
