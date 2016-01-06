@@ -1,93 +1,91 @@
-var nicknameList = [
-  'Jack','Jason','Jim','Alice','Sherly',
-  'Ben','James','Mike','Jay','Lucy','Kate'
-]
-
 var socket = io.connect();
-//随机选择昵称
-username = nicknameList[Math.floor(Math.random()*10)]
-//通知服务器随机选到的名字
-socket.emit('add user',username)
 
-new Vue({
-  el: '.title',
-  data: {
-    welcome: 'Welcome to Here.'
-  }
-})
+//通知服务器我进来了
+socket.emit('add user')
 
-var loginButton = new Vue({
-  el: '.loginButton',
+var messagesList = new Vue({
+  el: '#messagesArea',
   data: {
-    value: '开始聊天'
+    items: []
   },
   methods: {
-    login: function () {
-      console.log('可以响应');
-      // 下面的逻辑应该 设计在登陆成功后  而不是点击按钮后
-      // 此处应该调用函数来开启socket
-      //算了直接进去吧
-      var loginPage = document.getElementById("loginPage")
-      loginPage.style.display = 'none'
-
+    add: function(data){
+      if (this.items.length == 0){
+        this.items = data.lastInfo
+      }
+      else{
+        this.items.push(data)
+      }
     }
   }
 })
 
-var messagesList = new Vue({
-  el: '.messages',
-  data: {
-    items:[
-      {message: '第一条', username: 'Jason'},
-      {message: '第二条', username: 'Jack'}
-    ]
-  }
-})
 var usersList = new Vue({
-  el: '.users',
+  el: '#userArea',
   data: {
-    items:[
-      {username: 'Jack'},
-      {username: 'Jason'}
-    ]
+    items:[]
+  },
+  methods: {
+    add: function(data){
+      this.items = data.users
+    }
   }
 })
 
 var inputMessage = new Vue({
-  el: '.inputMessage',
+  el: '#inputMessage',
   methods: {
     send: function(){
-      sendMessage()
+      var message = inputMessage.message
+      //清空输入框
+      inputMessage.message = ''
+      //发送出去
+      messagesList.add({
+        username: username, message: message,nameColor: nameColor
+      })
+      socket.emit('new message',message)
     }
   }
 })
 
 //先渲染以前保存的数条消息
-function lastChatMessage (data){
-  messagesList.items = (data.lastInfo)
+// function lastChatMessage (data){
+//   messagesList.items = (data.lastInfo)
+// }
+
+// function addChatMessage (data){
+//   messagesList.items.push(data)
+//
+// }
+function addMyChatMessage(data){
+
 }
 
-function addChatMessage (data){
-  messagesList.items.push(data)
-}
+// function sendMessage(){
+//   var message = inputMessage.message
+//   //清空输入框
+//   inputMessage.message = ''
+//   //发送出去
+//   addChatMessage({
+//     username: username, message: message,nameColor: nameColor
+//   })
+//   socket.emit('new message',message)
+// }
 
-function sendMessage(){
-  var message = inputMessage.message
-  //清空输入框
-  inputMessage.message = ''
-  //发送出去
-  addChatMessage({
-    username: username, message: message
-  })
-  socket.emit('new message',message)
-}
+socket.on('welcome',function(data){
+  console.log("客户端监听到了welcome");
+  messagesList.add(data)
+  usersList.add(data)
+  // lastChatMessage(data)
+  username = data.clientName
+  nameColor = data.nameColor
+})
 
-  socket.on('last message',function(data){
-    console.log("客户端监听到了new message");
-    lastChatMessage(data)
-  })
+socket.on('new message',function(data){
+  console.log("客户端监听到了new message");
+  messagesList.add(data)
+})
 
-  socket.on('new message',function(data){
-    console.log("客户端监听到了new message");
-    addChatMessage(data)
-  })
+socket.on('user left',function(data){
+  // notify()
+})

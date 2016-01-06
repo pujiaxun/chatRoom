@@ -1,46 +1,36 @@
 * {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 }
 
 html{
-    font-weight: 300;
-}
-
-html,input{
-  font-family:
-    "HelveticaNeue-Light",
-    "Helvetica Neue Light",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    "Lucida Grande",
-    sans-serif;
+    /*font-weight: 300;*/
 }
 
 html, body {
-  height: 100%;
+  /*height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0;*/
 }
 
 ul {
+  /*word-wrap: break-word;*/
   list-style: none;
-  word-wrap: break-word;
 }
 
 .pages{
   /*主体页面*/
-  height: 100%;
+  /*height: 100%;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0;*/
+  /*border: 1px solid;*/
 }
 
 .page{
-  height: 100%;
+  /*height: 100%;
   width: 100%;
-  position: absolute;
+  position: absolute;*/
 }
 
 .login.page{
@@ -48,37 +38,49 @@ ul {
 }
 
 .login.page .welcome{
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .login.page .loginButton{
-  height: 50px;
-  width: 120px;
+  /*height: 50px;
+  width: 120px;*/
 }
 
 .login.page .title{
-  color: white;
+  /*color: white;*/
 }
 
 .chat.page{
   /*margin: 50px;*/
 }
 
-.userArea{
-  width: 20%;
-  height: 100%;
-  background-color: #2af999;
-  float: left;
+#userArea{
+  /*width: 20%;*/
+  height: 640px;
+  background-color: rgb(201, 204, 206);
+  /*float: left;*/
+  /*clear: both;*/
+  /*margin: 10px;*/
+  overflow:auto;
 }
 .chatArea{
-  width: 80%;
-  height: 90%;
-  background-color: #abcccf;
-  float: right;
+  /*width: 80%;
+  height: 90%;*/
+  /*float: left;*/
+  /*clear: both;*/
 }
-.inputMessage {
-    float: right;
+#messagesArea{
+  background-color: rgb(245, 245, 245);
+  height: 540px;
+  overflow:auto;
+}
+#inputMessage {
+    /*float: right;*/
     /*clear: left;*/
-    width: 80%;
-    height: 10%;
+    /*width: 80%;*/
+    /*height: 10%;*/
+    overflow-y:auto;
+    width: 100%;
+    height: 100px;
+
 }

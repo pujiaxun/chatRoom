@@ -4,40 +4,41 @@
     <meta charset="utf-8">
     <title>Chat Room</title>
     <link rel="stylesheet"  href="style.css">
-
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <body>
-    <div class="pages">
-      <div class="chat page">
-        <div class="userArea">
+  <body onLoad="document.getElementById('inputMessage').focus()">
+    <div class="pages container ">
+        <div class="col-md-3" id="userArea">
           <ul class="users">
-            <li v-for="item in items">
+            <li v-for="item in items" v-bind:style="{ color: item.nameColor}">
               {{ item.username }}
             </li>
           </ul>
         </div>
-        <div class="chatArea">
-          <ul class="messages" >
-            <li v-for="item in items">
-              {{ item.username }}: {{ item.message }}
-            </li>
-          </ul>
-        </div>
-        <div>
-          <input class="inputMessage" type="text" v-on:keyup.13="send" v-model="message">
+
+        <div class="chatArea col-md-9 row ">
+          <div id="messagesArea">
+            <dl class="dl-horizontal messages" v-for="item in items">
+              <dt v-bind:style="{ color: item.nameColor}">
+                {{ item.username }}
+              </dt>
+              <dd>{{ item.message }}</dd>
+            </dl>
+          </div>
+
+          <div>
+            <!-- <input class="inputMessage" type="textfield" v-on:keyup.enter="send" v-model="message"> -->
+            <textarea id="inputMessage"   v-model="message" @keyup.enter="send"
+              placeholder="请输入消息,Enter发送">
+            </textarea>
+          </div>
         </div>
       </div>
-      <div class="login page" id="loginPage">
-        <div class="welcome" >
-          <h3 class="title">{{ welcome }}</h3>
-          <input class="loginButton" type="button" value="{{ value }}" @click="login">
-        </div>
-      </div>
-    </div>
 
   </body>
   <script type="text/javascript" src="vue.js" ></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="main.js" ></script>
-
+  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </html>
