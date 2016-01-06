@@ -3,34 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>Chat Room</title>
-    <link rel="stylesheet"  href="style.css">
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"  href="style.css">
   </head>
   <body onLoad="document.getElementById('inputMessage').focus()">
-    <div class="pages container ">
+    <div class="pages container " id="page">
         <div class="col-md-3" id="userArea">
+          <h3>Online Users：{{users.length}}</h3>
           <ul class="users">
-            <li v-for="item in items" v-bind:style="{ color: item.nameColor}">
-              {{ item.username }}
+            <li v-for="user in users" v-bind:style="{ color: user.nameColor}">
+              {{ user.username }}
             </li>
           </ul>
         </div>
 
         <div class="chatArea col-md-9 row ">
-          <div id="messagesArea">
-            <dl class="dl-horizontal messages" v-for="item in items">
-              <dt v-bind:style="{ color: item.nameColor}">
-                {{ item.username }}
+          <div id="messagesArea" >
+            <h3 id="notification"></h3>
+            <dl class="dl-horizontal messages" v-for="msg in messages">
+              <dt v-bind:style="{ color: msg.nameColor }">
+                {{ msg.username }}
               </dt>
-              <dd>{{ item.message }}</dd>
+              <dd>{{ msg.message }}</dd>
             </dl>
           </div>
 
           <div>
-            <!-- <input class="inputMessage" type="textfield" v-on:keyup.enter="send" v-model="message"> -->
-            <textarea id="inputMessage"   v-model="message" @keyup.enter="send"
+            <textarea id="inputMessage"   v-model="inputMessage" @keyup.enter="sendMessage"
               placeholder="请输入消息,Enter发送">
             </textarea>
+            <input type="button" id="sendBtn" class="btn" value="发送" @click="sendMessage">
           </div>
         </div>
       </div>

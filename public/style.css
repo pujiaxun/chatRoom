@@ -6,71 +6,45 @@ html{
     /*font-weight: 300;*/
 }
 
-html, body {
+body {
+  background-image: url('./bkg.jpg');
   /*height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;*/
+  /*background-color: #303538;*/
 }
-
+h3{
+  text-align: center;
+}
 ul {
   /*word-wrap: break-word;*/
   list-style: none;
 }
 
-.pages{
+#page{
   /*主体页面*/
   /*height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;*/
-  /*border: 1px solid;*/
-}
-
-.page{
-  /*height: 100%;
-  width: 100%;
-  position: absolute;*/
-}
-
-.login.page{
-  background-color: #222;
-}
-
-.login.page .welcome{
-  /*text-align: center;*/
-}
-
-.login.page .loginButton{
-  /*height: 50px;
-  width: 120px;*/
-}
-
-.login.page .title{
-  /*color: white;*/
-}
-
-.chat.page{
-  /*margin: 50px;*/
+  /*border: 1px solid ;
+  border-radius: 10px;*/
+  /*background-color: #303538;*/
 }
 
 #userArea{
   /*width: 20%;*/
   height: 640px;
-  background-color: rgb(201, 204, 206);
+  background-color: #dedede;
   /*float: left;*/
   /*clear: both;*/
   /*margin: 10px;*/
   overflow:auto;
 }
-.chatArea{
-  /*width: 80%;
-  height: 90%;*/
-  /*float: left;*/
-  /*clear: both;*/
-}
+
 #messagesArea{
-  background-color: rgb(245, 245, 245);
+  background-color: #ececec;
   height: 540px;
   overflow:auto;
 }
@@ -79,8 +53,12 @@ ul {
     /*clear: left;*/
     /*width: 80%;*/
     /*height: 10%;*/
-    overflow-y:auto;
-    width: 100%;
+    overflow-y:scroll;
+    width: 90%;
     height: 100px;
-
+}
+#sendBtn{
+  position: absolute;
+  width: 10%;
+  height: 100px;
 }

@@ -6,7 +6,7 @@ var server = http.createServer(app)
 var io = require('socket.io')(server)
 
 //监听3000端口
-server.listen(3000,'192.168.10.118')
+server.listen(3000,'192.168.1.108')
 console.log("Server listening at port 3000. ")
 
 //设置静态文件默认路径
@@ -81,6 +81,11 @@ io.on('connection', function (socket) {
         nameColor: socket.nameColor,
         users: usersOnline
     })
+    socket.broadcast.emit('user join',{
+      clientName: socket.username,
+      nameColor: socket.nameColor,
+      users: usersOnline
+    })
     addedUser = true
   })
 
@@ -100,8 +105,9 @@ io.on('connection', function (socket) {
       leaveUsersOnline(socket.username,socket.nameColor)
       console.log('还有'+usersOnline.length+'个人')
       socket.broadcast.emit('user left',{
-        username: socket.username,
-        nameColor: socket.nameColor
+        clientName: socket.username,
+        nameColor: socket.nameColor,
+        users: usersOnline
       })
     }
   })

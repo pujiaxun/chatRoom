@@ -3,89 +3,73 @@ var socket = io.connect();
 //通知服务器我进来了
 socket.emit('add user')
 
-var messagesList = new Vue({
-  el: '#messagesArea',
+var vm = new Vue({
+  el: '#page',
   data: {
-    items: []
+    messages: [],
+    users: []
   },
   methods: {
-    add: function(data){
-      if (this.items.length == 0){
-        this.items = data.lastInfo
+    addMessage: function(data){
+      if (this.messages.length == 0){
+        this.messages = data.lastInfo
       }
       else{
-        this.items.push(data)
+        this.messages.push(data)
       }
-    }
-  }
-})
-
-var usersList = new Vue({
-  el: '#userArea',
-  data: {
-    items:[]
-  },
-  methods: {
-    add: function(data){
-      this.items = data.users
-    }
-  }
-})
-
-var inputMessage = new Vue({
-  el: '#inputMessage',
-  methods: {
-    send: function(){
-      var message = inputMessage.message
-      //清空输入框
-      inputMessage.message = ''
-      //发送出去
-      messagesList.add({
-        username: username, message: message,nameColor: nameColor
+    },
+    addUser: function(data){
+      this.users = data.users
+    },
+    sendMessage: function(data){
+      var input = inputMessage
+      var message = input.value
+      input.value = ''
+      if (message.trim()==''){
+        alert("Cannot send a blank message.")
+        return
+      }
+      this.addMessage({
+        username: username,
+        message: message,
+        nameColor: nameColor
       })
       socket.emit('new message',message)
+      setTimeout("vm.scroll()",1)
+    },
+    notify: function(data){
+      var log = document.getElementById('notification')
+      log.innerHTML = data
+    },
+    scroll: function(){
+      var area = document.getElementById('messagesArea')
+      // area.scrollTop = 100000
+      area.scrollTop = area.scrollHeight
     }
   }
 })
 
-//先渲染以前保存的数条消息
-// function lastChatMessage (data){
-//   messagesList.items = (data.lastInfo)
-// }
-
-// function addChatMessage (data){
-//   messagesList.items.push(data)
-//
-// }
-function addMyChatMessage(data){
-
-}
-
-// function sendMessage(){
-//   var message = inputMessage.message
-//   //清空输入框
-//   inputMessage.message = ''
-//   //发送出去
-//   addChatMessage({
-//     username: username, message: message,nameColor: nameColor
-//   })
-//   socket.emit('new message',message)
-// }
-
+//监听socket事件
 socket.on('welcome',function(data){
   console.log("客户端监听到了welcome");
-  messagesList.add(data)
-  usersList.add(data)
-  // lastChatMessage(data)
+  vm.addMessage(data)
+  vm.addUser(data)
   username = data.clientName
   nameColor = data.nameColor
 })
 
 socket.on('new message',function(data){
   console.log("客户端监听到了new message");
-  messagesList.add(data)
+  vm.addMessage(data)
+  setTimeout("vm.scroll()",1)
+})
+
+socket.on('user join',function(data){
+  vm.addUser(data)
+  vm.notify(data.clientName+" joins the chat ")
 })
 
 socket.on('user left',function(data){
-  // notify()
+  vm.addUser(data)
+  vm.notify(data.clientName+" leaves the chat ")
 })
