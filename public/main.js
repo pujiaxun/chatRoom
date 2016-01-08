@@ -35,7 +35,7 @@ var vm = new Vue({
         nameColor: nameColor
       })
       socket.emit('new message',message)
-      setTimeout("vm.scroll()",1)
+      setTimeout("vm.scroll()",0)
     },
     notify: function(data){
       var log = document.getElementById('notification')
@@ -43,7 +43,6 @@ var vm = new Vue({
     },
     scroll: function(){
       var area = document.getElementById('messagesArea')
-      // area.scrollTop = 100000
       area.scrollTop = area.scrollHeight
     }
   }
@@ -51,7 +50,6 @@ var vm = new Vue({
 
 //监听socket事件
 socket.on('welcome',function(data){
-  console.log("客户端监听到了welcome");
   vm.addMessage(data)
   vm.addUser(data)
   username = data.clientName
@@ -59,9 +57,8 @@ socket.on('welcome',function(data){
 })
 
 socket.on('new message',function(data){
-  console.log("客户端监听到了new message");
   vm.addMessage(data)
-  setTimeout("vm.scroll()",1)
+  setTimeout("vm.scroll()",0)
 })
 
 socket.on('user join',function(data){
@@ -72,4 +69,8 @@ socket.on('user join',function(data){
 socket.on('user left',function(data){
   vm.addUser(data)
   vm.notify(data.clientName+" leaves the chat ")
+})
+
+socket.on('disconnect',function(){
+  vm.notify("Sorry,here is too crowded.")
 })
