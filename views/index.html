@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Chat Room</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="Bookmark" href="favicon.ico">
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet"  href="style.css">
   </head>
@@ -10,14 +12,15 @@
     <div class="pages container " id="page">
         <div class="col-md-3" id="userArea">
           <h3>Online Users：{{users.length}}</h3>
-          <ul class="users">
-            <li v-for="user in users" v-bind:style="{ color: user.nameColor}">
+          <ul class="users" v-for="user in users">
+            <li>
+              <span v-bind:style="{ color: user.nameColor}">〇</span>
               {{ user.username }}
             </li>
           </ul>
         </div>
 
-        <div class="chatArea col-md-9 row ">
+        <div class="col-md-9" id="chatArea">
           <div id="messagesArea" >
             <h3 id="notification"></h3>
             <dl class="dl-horizontal messages" v-for="msg in messages">
@@ -30,9 +33,9 @@
 
           <div>
             <textarea id="inputMessage"   v-model="inputMessage" @keyup.enter="sendMessage"
-              placeholder="请输入消息,Enter发送">
+              placeholder="Say something...Press Enter to send" class="form-control ">
             </textarea>
-            <input type="button" id="sendBtn" class="btn" value="发送" @click="sendMessage">
+            <!-- <input type="button" id="sendBtn" class="btn form-control" value="Send" @click="sendMessage"> -->
           </div>
         </div>
       </div>

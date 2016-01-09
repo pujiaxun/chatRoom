@@ -35,7 +35,7 @@ var vm = new Vue({
         nameColor: nameColor
       })
       socket.emit('new message',message)
-      setTimeout("vm.scroll()",0)
+      Vue.nextTick(function () {vm.scroll()})
     },
     notify: function(data){
       var log = document.getElementById('notification')
@@ -58,7 +58,8 @@ socket.on('welcome',function(data){
 
 socket.on('new message',function(data){
   vm.addMessage(data)
-  setTimeout("vm.scroll()",0)
+  // 等待DOM更新后，触发滚动条
+  Vue.nextTick(function () {vm.scroll()})
 })
 
 socket.on('user join',function(data){

@@ -85,7 +85,6 @@ io.on('connection', function (socket) {
     }
     socket.username = newUser.name
     socket.nameColor = newUser.color
-    // usersOnline++
     //新用户加入到在线用户数组
     usersOnline.push({username: socket.username,nameColor: socket.nameColor})
     socket.emit('welcome',{
