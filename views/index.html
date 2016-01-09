@@ -21,14 +21,18 @@
         </div>
 
         <div class="col-md-9" id="chatArea">
+          <div id="notify">
+            <h2>{{notification}}</h2>
+          </div>
           <div id="messagesArea" >
-            <h3 id="notification"></h3>
-            <dl class="dl-horizontal messages" v-for="msg in messages">
-              <dt v-bind:style="{ color: msg.nameColor }">
-                {{ msg.username }}
-              </dt>
-              <dd>{{ msg.message }}</dd>
-            </dl>
+            <ul class="dl-horizontal messages" v-for="msg in messages">
+              <li>
+                <span v-bind:style="{ color: msg.nameColor }">
+                  {{ msg.username }}
+                </span>
+                {{ msg.message }}
+              </li>
+            </ul>
           </div>
 
           <div>

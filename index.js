@@ -6,7 +6,7 @@ var server = http.createServer(app)
 var io = require('socket.io')(server)
 
 //监听3000端口
-server.listen(3000,'127.0.0.1')
+server.listen(3000,'192.168.1.107')
 console.log("Server listening at port 3000. ")
 
 //设置静态文件默认路径

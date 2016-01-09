@@ -7,7 +7,8 @@ var vm = new Vue({
   el: '#page',
   data: {
     messages: [],
-    users: []
+    users: [],
+    notification: '123456'
   },
   methods: {
     addMessage: function(data){
@@ -35,7 +36,7 @@ var vm = new Vue({
         nameColor: nameColor
       })
       socket.emit('new message',message)
-      Vue.nextTick(function () {vm.scroll()})
+      this.$nextTick(function () {vm.scroll()})
     },
     notify: function(data){
       var log = document.getElementById('notification')
@@ -59,7 +60,7 @@ socket.on('welcome',function(data){
 socket.on('new message',function(data){
   vm.addMessage(data)
   // 等待DOM更新后，触发滚动条
-  Vue.nextTick(function () {vm.scroll()})
+  vm.$nextTick(function () {vm.scroll()})
 })
 
 socket.on('user join',function(data){
