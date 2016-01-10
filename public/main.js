@@ -8,7 +8,7 @@ var vm = new Vue({
   data: {
     messages: [],
     users: [],
-    notification: '123456'
+    notification: ''
   },
   methods: {
     addMessage: function(data){
@@ -39,8 +39,10 @@ var vm = new Vue({
       this.$nextTick(function () {vm.scroll()})
     },
     notify: function(data){
-      var log = document.getElementById('notification')
-      log.innerHTML = data
+      vm.$set('notification', data)
+      setTimeout(function(){
+        vm.$set('notification','')
+      },3000)
     },
     scroll: function(){
       var area = document.getElementById('messagesArea')

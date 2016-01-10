@@ -21,7 +21,7 @@
         </div>
 
         <div class="col-md-9" id="chatArea">
-          <div id="notify">
+          <div id="notify" v-if="notification" transition="fade">
             <h2>{{notification}}</h2>
           </div>
           <div id="messagesArea" >

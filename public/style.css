@@ -17,21 +17,22 @@ h3{
   text-align: center;
 }
 
-h2{
+/*h2{
   text-align: center;
-  /*vertical-align: middle;*/
   margin-top: 0;
   margin-bottom: 0;
-}
+  padding: 10px;
+  display: inline;
+} */
 
 
-ul {
+ul li{
   list-style: none;
+  display: inline;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
-dd {
-  word-break: keep-all;
-}
 #page{
   /*主体页面*/
   padding: 0;
@@ -70,11 +71,14 @@ div::before {
 }
 
 #notify{
-  height: 70px;
+  /*height: 70px;
+  line-height: 70px;*/
   text-align: center;
+  /*border-bottom: 1px solid #ccc;*/
 }
+
 #messagesArea{
-  padding: 0;
+  margin-top: 70px;
   padding-right: 50px;
   height: 500px;
   overflow-y:auto;
@@ -96,4 +100,38 @@ div::before {
   height: 70px;
   border-radius: 4px;
   border: solid 1px #99A5AF;
+}
+
+/* 必需 */
+.fade-transition {
+  transition: all .7s ease;
+  height: 70px;
+  line-height: 70px;
+  left: 0;
+  right: 0;
+  position: absolute;
+  overflow: hidden;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  /*display: inline;*/
+}
+
+/* .expand-enter 定义进入的开始状态 */
+/* .expand-leave 定义离开的结束状态 */
+.fade-enter{
+  /*opacity: 0;*/
+  filter: blur(20px);
+  -webkit-filter: blur(20px);
+}
+
+.fade-leave {
+  /*height: 0px;*/
+  /*line-height: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  padding: 0 ;
+  /*opacity: 0.5;*/
+  /*filter: blur(20px);
+  -webkit-filter: blur(20px);*/
 }
