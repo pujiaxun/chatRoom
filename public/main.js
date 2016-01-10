@@ -24,18 +24,23 @@ var vm = new Vue({
     },
     sendMessage: function(data){
       var input = inputMessage
-      var message = input.value
+      var content = input.value
+      var publishTime = new Date().toLocaleDateString('en-us',{
+        year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit",
+        minute: "2-digit",second: "2-digit"
+        })
       input.value = ''
-      if (message.trim()==''){
+      if (content.trim()==''){
         alert("Cannot send a blank message.")
         return
       }
       this.addMessage({
         username: username,
-        message: message,
+        message: {content: content,publishTime: publishTime},
         nameColor: nameColor
       })
-      socket.emit('new message',message)
+      socket.emit('new message',{content: content,publishTime: publishTime})
       this.$nextTick(function () {vm.scroll()})
     },
     notify: function(data){

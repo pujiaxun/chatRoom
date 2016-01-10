@@ -15,7 +15,7 @@
           <ul class="users" v-for="user in users">
             <li>
               <span v-bind:style="{ color: user.nameColor}">〇</span>
-              {{ user.username }}
+              <span>{{ user.username }}</span>
             </li>
           </ul>
         </div>
@@ -26,11 +26,14 @@
           </div>
           <div id="messagesArea" >
             <ul class="dl-horizontal messages" v-for="msg in messages">
-              <li>
+              <li class="dialogs">
                 <span v-bind:style="{ color: msg.nameColor }">
                   {{ msg.username }}
+                  <span style="opacity:0.8;">{{ msg.message.publishTime }}</span>
                 </span>
-                {{ msg.message }}
+                <div class="">
+                  {{ msg.message.content }}
+                </div>
               </li>
             </ul>
           </div>

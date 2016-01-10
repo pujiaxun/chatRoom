@@ -71,10 +71,7 @@ div::before {
 }
 
 #notify{
-  /*height: 70px;
-  line-height: 70px;*/
   text-align: center;
-  /*border-bottom: 1px solid #ccc;*/
 }
 
 #messagesArea{
@@ -102,6 +99,14 @@ div::before {
   border: solid 1px #99A5AF;
 }
 
+.dialogs{
+  /*width: 90%;*/
+  /*float: right;*/
+  /*padding: 5px;
+  margin: 10px;*/
+  /*border: 1px solid #ccc;
+  border-radius: 4px;*/
+}
 /* 必需 */
 .fade-transition {
   transition: all .7s ease;
@@ -114,24 +119,15 @@ div::before {
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
-  /*display: inline;*/
 }
 
 /* .expand-enter 定义进入的开始状态 */
-/* .expand-leave 定义离开的结束状态 */
 .fade-enter{
-  /*opacity: 0;*/
   filter: blur(20px);
   -webkit-filter: blur(20px);
 }
 
+/* .expand-leave 定义离开的结束状态 */
 .fade-leave {
-  /*height: 0px;*/
-  /*line-height: 0;*/
-  /*left: 0;*/
-  /*right: 0;*/
   padding: 0 ;
-  /*opacity: 0.5;*/
-  /*filter: blur(20px);
-  -webkit-filter: blur(20px);*/
 }

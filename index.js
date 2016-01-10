@@ -52,7 +52,7 @@ addToLastMessages = function(username,message){
   }
 }
 //增加一个初始信息，懒得改addMessage的逻辑了
-addToLastMessages('System','Welcome to here.')
+addToLastMessages('System',{content: 'Welcome to here.', publishTime: ''})
 
 //选择名称
 selectName = function(){
