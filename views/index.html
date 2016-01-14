@@ -29,7 +29,7 @@
               <li class="dialogs">
                 <span v-bind:style="{ color: msg.nameColor }">
                   {{ msg.username }}
-                  <span style="opacity:0.8;">{{ msg.message.publishTime }}</span>
+                  <span style="opacity:0.8;" v-bind:style="{ color: msg.nameColor }" >{{ msg.message.publishTime }}</span>
                 </span>
                 <div class="">
                   {{ msg.message.content }}
