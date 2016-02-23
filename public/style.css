@@ -1,134 +1,49 @@
-* {
-  font-family: Verdana, sans-serif ;
-  color: #634E55;
-  font-size: 14pt;
+
+html,body{
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-html{
-    /*font-weight: 300;*/
+#container{
+  height: 100%;
 }
-
-body {
-  background: url('./bkg.jpg') 0 / cover fixed;
-  background-size: cover;
-
-}
-
-h3{
+#userList{
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  top: 0;
   text-align: center;
+  /*border-right: 1px solid black;*/
+  /*bottom: 0;*/
+  /*left: 0*/
+  float: left;
+  background-color: rgb(223, 223, 223);
 }
 
-/*h2{
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 10px;
-  display: inline;
-} */
-
-
-ul li{
-  list-style: none;
-  display: inline;
-  word-wrap: break-word;
-  word-break: break-all;
+#messageList{
+  width: 80%;
+  height: 90%;
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  /*border-bottom: 1px black solid;*/
+  float: left;
+  background-color: rgb(240, 240, 240);
 }
 
-#page{
-  /*主体页面*/
-  padding: 0;
-  margin-top: 25px;
-  margin-bottom: 10px;
-  box-shadow: -4px -4px 7px #444;
-  position: relative;
-  background: hsla(0,0%,100%,.4);
-  overflow: hidden;
-}
+#messageInput{
+  /*width: 600px;*/
+  width: 80%;
+  height: 10%;
+  font-size: 2.3vw;
 
-div::before {
-    content: '';
-    position: absolute;
-    /*margin: -30px;*/
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: rgba(255,0,0,0.1); /* for debugging */
-    background: url('./bkg.jpg') 0 / cover fixed;
-    z-index: -1;
-    filter: blur(30px);
-    -webkit-filter: blur(30px);
-}
-
-
-#userArea{
-  height: 640px;
-  padding: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border-right: 1px solid #ccc;
-
-}
-
-#chatArea{
-  padding: 0;
-}
-
-#notify{
-  text-align: center;
-}
-
-#messagesArea{
-  margin-top: 70px;
-  padding-right: 50px;
-  height: 500px;
-  overflow-y:auto;
-  overflow-x: hidden;
-}
-#inputMessage {
-  background-color: transparent;
-  padding: 0;
-  overflow-y:auto;
-  height: 70px;
+  /*margin: 0;*/
+  /*clear: both;*/
+  border: 0;
+  margin: 0;
   resize: none;
-
-}
-#sendBtn{
-  position: absolute;
   padding: 0;
-  width: 7%;
-  background-color: transparent;
-  height: 70px;
-  border-radius: 4px;
-  border: solid 1px #99A5AF;
-}
-
-.dialogs{
-  /*width: 90%;*/
-  /*float: right;*/
-  /*padding: 5px;
-  margin: 10px;*/
-  /*border: 1px solid #ccc;
-  border-radius: 4px;*/
-}
-/* 必需 */
-.fade-transition {
-  transition: all .7s ease;
-  height: 70px;
-  line-height: 70px;
-  left: 0;
-  right: 0;
-  position: absolute;
-  overflow: hidden;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-/* .expand-enter 定义进入的开始状态 */
-.fade-enter{
-  filter: blur(20px);
-  -webkit-filter: blur(20px);
-}
-
-/* .expand-leave 定义离开的结束状态 */
-.fade-leave {
-  padding: 0 ;
+  float: left;
+  background-color: rgb(245, 245, 245);
 }

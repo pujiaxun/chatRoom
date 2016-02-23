@@ -5,52 +5,23 @@
     <title>Chat Room</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="Bookmark" href="favicon.ico">
-    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet"  href="style.css">
   </head>
-  <body onLoad="document.getElementById('inputMessage').focus()">
-    <div class="pages container " id="page">
-        <div class="col-md-3" id="userArea">
-          <h3>Online Users：{{users.length}}</h3>
-          <ul class="users" v-for="user in users">
-            <li>
-              <span v-bind:style="{ color: user.nameColor}">〇</span>
-              <span>{{ user.username }}</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-md-9" id="chatArea">
-          <div id="notify" v-if="notification" transition="fade">
-            <h2>{{notification}}</h2>
-          </div>
-          <div id="messagesArea" >
-            <ul class="dl-horizontal messages" v-for="msg in messages">
-              <li class="dialogs">
-                <span v-bind:style="{ color: msg.nameColor }">
-                  {{ msg.username }}
-                  <span style="opacity:0.8;" v-bind:style="{ color: msg.nameColor }" >{{ msg.message.publishTime }}</span>
-                </span>
-                <div class="">
-                  {{ msg.message.content }}
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <textarea id="inputMessage"   v-model="inputMessage" @keyup.enter="sendMessage"
-              placeholder="Say something...Press Enter to send" class="form-control ">
-            </textarea>
-            <!-- <input type="button" id="sendBtn" class="btn form-control" value="Send" @click="sendMessage"> -->
-          </div>
-        </div>
+  <body onLoad="document.getElementById('messageInput').focus()">
+    <div id="container">
+      <div id="userList">
+        <h1>当前在线</h1>
       </div>
+      <div id="messageList">
 
+      </div>
+      <input id="messageInput" type="text" value="" placeholder="请输入内容，Enter发送...">
+    </div>
   </body>
   <script type="text/javascript" src="vue.js" ></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="main.js" ></script>
-  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <!-- <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script> -->
+  <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 </html>
