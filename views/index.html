@@ -11,12 +11,27 @@
   <body onLoad="document.getElementById('messageInput').focus()">
     <div id="container">
       <div id="userList">
-        <h1>当前在线</h1>
+        <h2>昵称: <strong v-bind:style="{color: myColor}" >{{ myName }}</strong></h2>
+        <h2>当前在线: {{users.length}}</h2>
+        <ul v-for="user in users">
+          <li><span v-bind:style="{color: user.userColor}">〇</span> {{ user.userName }}</li>
+        </ul>
       </div>
       <div id="messageList">
-
+        <ul v-for="msg in messages">
+          <li  class="message" >
+            <strong v-bind:style="{color: msg.userColor,clear: 'both',float: 'left'}"
+            v-show="!msg.is_self && !msg.message.is_notification">{{ msg.userName }}</strong>
+            <div v-bind:class="{'self-message': msg.is_self,
+                                'other-message': !msg.is_self && !msg.message.is_notification,
+                                'system-message': msg.message.is_notification}">
+            {{ msg.message.content }}
+            </div>
+          </li>
+        </ul>
       </div>
-      <input id="messageInput" type="text" value="" placeholder="请输入内容，Enter发送...">
+      <input id="messageInput" type="text" value=""
+      @keyup.enter="sendMessage" placeholder="请输入内容，Enter发送...">
     </div>
   </body>
   <script type="text/javascript" src="vue.js" ></script>

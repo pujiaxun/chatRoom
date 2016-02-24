@@ -27,34 +27,33 @@ var colorsList = [
   '#3a84e7', '#9d43db', '#50eeca', '#4c8de2', '#e6d32e','#e7206d'
 ]
 
-var userList = new Array
+var userList = []
 userLeave = function(userName,userColor){
   //回收昵称
   nicknamesList.push(userName)
+  colorsList.push(userColor)
   for(var n in userList){
     t = userList[n]
-    if((t.userName == userName)&&(t.userColor == userColor)){
+    if(t.userName == userName){
       userList.splice(n,1)
     }
   }
 }
 //新建数组储存近十条消息
-var lastMessages = new Array
+var lastMessages = []
 addToLastMessages = function(userName,message){
   lastMessages.push({
     userName: userName,
-    message: message,
-    userColor: 'rgb(150, 150, 150)'
+    userColor: 'rgb(150, 150, 150)',
+    message: message
   })
   //如果超过十条则删除第二个元素
-  if (lastMessages.length>10){
-    lastMessages.shift()
+  if (lastMessages.length>11){
+    lastMessages.splice(1,1)
   }
 }
-// //增加一个初始信息，懒得改addMessage的逻辑了
-// addToLastMessages('System',{content: '欢迎来到匿名聊天室', publishTime: ''})
-
-//注释掉上方代码会导致Message数组为空时的 读取bug ！！！！
+// //增加一个初始信息
+addToLastMessages('System',{content: '欢迎来到匿名聊天室',is_notification: true})
 
 //选择名称
 selectName = function(){
@@ -64,9 +63,9 @@ selectName = function(){
   }
   randomIndex = Math.floor(Math.random()*(nicknamesList.length-1))
   name = nicknamesList[randomIndex]
-  // color = colorsList[Math.floor(Math.random()*10)]
   color = colorsList[randomIndex]
   nicknamesList[randomIndex] = nicknamesList.pop()
+  colorsList[randomIndex] = colorsList.pop()
   data={name: name,color:color}
   return data
 }
@@ -92,12 +91,12 @@ io.on('connection', function (socket) {
     userList.push({userName: socket.userName,userColor: socket.userColor})
     socket.emit('welcome',{
         lastInfo: lastMessages,
-        clientName: socket.userName,
+        userName: socket.userName,
         userColor: socket.userColor,
         users: userList
     })
     socket.broadcast.emit('new user',{
-      clientName: socket.userName,
+      userName: socket.userName,
       userColor: socket.userColor,
       users: userList
     })
@@ -119,7 +118,7 @@ io.on('connection', function (socket) {
       console.log(socket.userName+' 断开连接啦')
       userLeave(socket.userName,socket.userColor)
       socket.broadcast.emit('user left',{
-        clientName: socket.userName,
+        userName: socket.userName,
         userColor: socket.userColor,
         users: userList
       })
