@@ -14,21 +14,27 @@
         <h2>昵称: <strong v-bind:style="{color: myColor}" >{{ myName }}</strong></h2>
         <h2>当前在线: {{users.length}}</h2>
         <ul v-for="user in users">
-          <li><span v-bind:style="{color: user.userColor}">〇</span> {{ user.userName }}</li>
+          <li><span v-bind:style="{color: user.userColor}">〇</span> <span>{{ user.userName }}</span></li>
         </ul>
       </div>
       <div id="messageList">
-        <ul v-for="msg in messages">
-          <li  class="message" >
-            <strong v-bind:style="{color: msg.userColor,clear: 'both',float: 'left'}"
-            v-show="!msg.is_self && !msg.message.is_notification">{{ msg.userName }}</strong>
-            <div v-bind:class="{'self-message': msg.is_self,
-                                'other-message': !msg.is_self && !msg.message.is_notification,
-                                'system-message': msg.message.is_notification}">
-            {{ msg.message.content }}
+        <div v-for="msg in messages">
+          <div class="time-container" v-show="!msg.message.is_system && msg.message.is_time">
+            <div class="time-message">
+              {{ msg.message.displayTime }}
             </div>
-          </li>
-        </ul>
+          </div>
+          <div  class="message" >
+            <div v-bind:style="{color: msg.userColor}" class="wrap"
+            v-show="msg.message.is_other">{{ msg.userName }}</div>
+            <div v-bind:class="{'self-message': msg.message.is_self,
+                                'other-message': msg.message.is_other,
+                                'system-message': msg.message.is_system
+                              }">
+              {{ msg.message.content }}
+            </div>
+          </div>
+        </div>
       </div>
       <input id="messageInput" type="text" value=""
       @keyup.enter="sendMessage" placeholder="请输入内容，Enter发送...">

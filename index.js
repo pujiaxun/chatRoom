@@ -17,6 +17,10 @@ app.get('/', function(req, res) {
    res.sendFile(__dirname + '/views/index.html')
 })
 
+//我也不知道我怎么想到这黑科技的...
+//生成一个时间当做最后显示消息时间的 “时间” ，为了直接显示，提前一小时
+var lastDisplayTime = new Date(new Date()-1*60*60*1000).toString()
+
 //设置初始昵称和颜色数组
 var nicknamesList = [
   'Jack','Jason','Lisa','Alice','Sherly',
@@ -24,7 +28,7 @@ var nicknamesList = [
 ]
 var colorsList = [
   '#ff5444', '#ffac42', '#70dd5e', '#f78b00', '#79e632',
-  '#3a84e7', '#9d43db', '#50eeca', '#4c8de2', '#e6d32e','#e7206d'
+  '#5d9df2', '#9d43db', '#50eeca', '#316ebd', '#e6d32e','#e7206d'
 ]
 
 var userList = []
@@ -53,7 +57,7 @@ addToLastMessages = function(userName,message){
   }
 }
 // //增加一个初始信息
-addToLastMessages('System',{content: '欢迎来到匿名聊天室',is_notification: true})
+addToLastMessages('System',{content: '欢迎来到匿名聊天室',is_system: true})
 
 //选择名称
 selectName = function(){
@@ -73,7 +77,6 @@ selectName = function(){
 //监听socket 建立新连接时
 io.on('connection', function (socket) {
   var addedUser = false
-
   //当有新的用户访问网站
   socket.on('new user',function(){
     if(addedUser) return
@@ -93,7 +96,8 @@ io.on('connection', function (socket) {
         lastInfo: lastMessages,
         userName: socket.userName,
         userColor: socket.userColor,
-        users: userList
+        users: userList,
+        lastDisplayTime: lastDisplayTime
     })
     socket.broadcast.emit('new user',{
       userName: socket.userName,
@@ -104,18 +108,17 @@ io.on('connection', function (socket) {
   })
 
   socket.on('new message',function(data){
-    console.log(socket.userName+" 发消息啦")
     socket.broadcast.emit('new message',{
         userName: socket.userName,
         userColor: socket.userColor,
         message: data
     })
     addToLastMessages(socket.userName,data)
+    lastDisplayTime = data.lastDisplayTime
   })
 
   socket.on('disconnect',function(data){
     if(addedUser){
-      console.log(socket.userName+' 断开连接啦')
       userLeave(socket.userName,socket.userColor)
       socket.broadcast.emit('user left',{
         userName: socket.userName,
@@ -125,4 +128,4 @@ io.on('connection', function (socket) {
     }
   })
 
-});
+})

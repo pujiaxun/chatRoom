@@ -12,7 +12,7 @@ var vm = new Vue({
     myColor: '',
     messages: [],
     users: [],
-    notifications: []
+    lastDisplayTime: 0
   },
   methods: {
     addMessage: function(data){
@@ -34,48 +34,75 @@ var vm = new Vue({
         // alert("不能发送空白消息")
         return
       }
-      var publishTime = new Date().toLocaleDateString('en-us',{
-        year: "numeric", month: "short",
-        day: "numeric", hour: "2-digit",
-        minute: "2-digit",second: "2-digit"
-        })
+
+      var rawTime = new Date()
+      var needDisplayTime = false
+      //如果距离上次显示消息时间的时间超过3分钟，则再次显示时间
+      if((rawTime - this.lastDisplayTime)>5*60*1000){
+        needDisplayTime = true
+        this.lastDisplayTime = rawTime
+      }
+
+      console.log(rawTime)
+      displayTime = this.timeFormat(rawTime)
       this.addMessage({
-        userName: userName,
-        userColor: userColor,
-        message: {content: content,publishTime: publishTime},
-        is_self: true
+        userName: this.myName,
+        userColor: this.myColor,
+        message: {
+          content: content,
+          displayTime: displayTime,
+          is_self: true,
+          is_time: needDisplayTime
+        }
       })
-      socket.emit('new message',{content: content,publishTime: publishTime})
+      socket.emit('new message',{
+        content: content,
+        displayTime: displayTime,
+        is_other: true,
+        is_time: needDisplayTime,
+        lastDisplayTime: this.lastDisplayTime.toString()
+      })
       this.$nextTick(function () {vm.scroll()})
     },
     notify: function(data,content){
       this.addMessage({
-        userName: data.userName,
-        userColor: data.userColor,
-        message: {content: content,is_notification: true},
-        is_self: false
+        message: {
+          content: content,
+          is_system: true
+        }
       })
       this.$nextTick(function () {vm.scroll()})
     },
     scroll: function(){
       var area = document.getElementById('messageList')
       area.scrollTop = area.scrollHeight
+    },
+    timeFormat: function(rawTime){
+      var h = rawTime.getHours()
+      var m = rawTime.getMinutes()
+      var d = rawTime.getDate()
+      var mon = rawTime.getMonth()+1
+      var y = rawTime.getFullYear()
+      var hour = (Array(2).join(0)+h).slice(-2)
+      var min = (Array(2).join(0)+m).slice(-2)
+      return y + '-' + mon + '-' + d + ' '+hour + ':' + min
     }
   }
 })
 
 //监听socket事件
 socket.on('welcome',function(data){
+  //初始化一些信息
+  vm.lastDisplayTime = new Date(data.lastDisplayTime)
   vm.addMessage(data)
   vm.updateUsers(data)
-  userName   = data.userName
-  userColor  = data.userColor
-  vm.myName  = userName
-  vm.myColor = userColor
+  vm.myName  = data.userName
+  vm.myColor = data.userColor
   vm.$nextTick(function () {vm.scroll()})
 })
 
 socket.on('new message',function(data){
+  vm.lastDisplayTime = new Date(data.message.lastDisplayTime)
   vm.addMessage(data)
   // 等待DOM更新后，触发滚动条
   vm.$nextTick(function () {vm.scroll()})
