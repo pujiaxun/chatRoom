@@ -43,21 +43,20 @@ var vm = new Vue({
         this.lastDisplayTime = rawTime
       }
 
-      console.log(rawTime)
       displayTime = this.timeFormat(rawTime)
       this.addMessage({
         userName: this.myName,
         userColor: this.myColor,
         message: {
           content: content,
-          displayTime: displayTime,
+          publicTime: displayTime,
           is_self: true,
           is_time: needDisplayTime
         }
       })
       socket.emit('new message',{
         content: content,
-        displayTime: displayTime,
+        publicTime: displayTime,
         is_other: true,
         is_time: needDisplayTime,
         lastDisplayTime: this.lastDisplayTime.toString()

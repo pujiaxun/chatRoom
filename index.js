@@ -7,7 +7,7 @@ var io = require('socket.io')(server)
 
 //监听3000端口
 server.listen(3000,'127.0.0.1')
-console.log("Server starts. ")
+console.log("Server starts")
 
 //设置静态文件默认路径
 app.use(express.static(__dirname + '/public'));
@@ -27,8 +27,8 @@ var nicknamesList = [
   'Winnie','Poker','Mike','Jay','Lucy','Kate'
 ]
 var colorsList = [
-  '#ff5444', '#ffac42', '#70dd5e', '#f78b00', '#79e632',
-  '#5d9df2', '#9d43db', '#50eeca', '#316ebd', '#e6d32e','#e7206d'
+  '#ff5444', '#ffac42', '#70dd5e', '#e48307', '#89bb37',
+  '#5f98e4', '#9d43db', '#50eeca', '#316ebd', '#e6d32e','#e7206d'
 ]
 
 var userList = []
@@ -48,7 +48,7 @@ var lastMessages = []
 addToLastMessages = function(userName,message){
   lastMessages.push({
     userName: userName,
-    userColor: 'rgb(150, 150, 150)',
+    userColor: '#888888',
     message: message
   })
   //如果超过十条则删除第二个元素
@@ -56,7 +56,7 @@ addToLastMessages = function(userName,message){
     lastMessages.splice(1,1)
   }
 }
-// //增加一个初始信息
+// 增加一个初始信息
 addToLastMessages('System',{content: '欢迎来到匿名聊天室',is_system: true})
 
 //选择名称

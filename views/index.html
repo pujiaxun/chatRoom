@@ -5,7 +5,6 @@
     <title>Chat Room</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="Bookmark" href="favicon.ico">
-    <!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet"  href="style.css">
   </head>
   <body onLoad="document.getElementById('messageInput').focus()">
@@ -21,7 +20,7 @@
         <div v-for="msg in messages">
           <div class="time-container" v-show="!msg.message.is_system && msg.message.is_time">
             <div class="time-message">
-              {{ msg.message.displayTime }}
+              {{ msg.message.publicTime }}
             </div>
           </div>
           <div  class="message" >
@@ -43,6 +42,4 @@
   <script type="text/javascript" src="vue.js" ></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="main.js" ></script>
-  <!-- <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script> -->
-  <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 </html>

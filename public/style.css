@@ -8,7 +8,7 @@ body{
   word-break:break-all;
 }
 h2{
-  color: rgb(75, 75, 75);
+  color: #4b4b4b;
 }
 
 ul,
@@ -18,7 +18,7 @@ li{
   word-break:break-all;
   margin: 15px;
   text-align: left;
-  color: rgb(75, 75, 75);
+  color: #4b4b4b;
 }
 
 #container{
@@ -28,10 +28,9 @@ li{
   width: 20%;
   height: 100%;
   margin: 0;
-  /*top: 0;*/
   text-align: center;
   float: left;
-  background-color: rgb(223, 223, 223);
+  background-color: #dfdfdf;
 }
 
 #messageList{
@@ -41,9 +40,8 @@ li{
   top: 0;
   bottom: 0;
   float: left;
-  /*clear: both;*/
   overflow-y: scroll;
-  background-color: rgb(240, 240, 240);
+  background-color: #f0f0f0;
 }
 
 #messageInput{
@@ -55,11 +53,10 @@ li{
   padding: 0;
   float: left;
   resize: none;
-  background-color: rgb(245, 245, 245);
+  background-color: #f5f5f5;
 }
 
 .message{
-  /*clear: both;*/
   text-align: center;
 }
 .wrap{
@@ -76,8 +73,8 @@ li{
   -webkit-border-radius:10px;
      -moz-border-radius:10px;
           border-radius:0 20px 20px 20px ;
-  background-color: rgb(204, 204, 204);
-  color: rgb(32, 32, 32);
+  background-color: #cccccc;
+  color: #222222;
 }
 .self-message{
   float: right;
@@ -88,20 +85,18 @@ li{
   -webkit-border-radius:10px;
      -moz-border-radius:10px;
           border-radius:30px 30px 0 30px;
-  background-color: rgb(30, 141, 212);
-  color: white;
+  background-color: #2291d9;
+  color: #eeeeee;
 }
 .system-message{
   float: none;
   clear: both;
-  color: rgb(158, 158, 158);
+  color: #888888;
   text-align: center;
   margin: 10px auto;
 }
 .time-container{
-  /*float: left;*/
   clear: both;
-  /*display: inline;*/
   margin: 0 auto;
   text-align: center;
 }
@@ -109,6 +104,6 @@ li{
   display: inline;
   border-radius: 15px;
   padding: 2px 8px;
-  color: rgb(242, 242, 242);
-  background-color: rgb(168, 168, 168);
+  color: #f2f2f2;
+  background-color: #aaaaaa;
 }
