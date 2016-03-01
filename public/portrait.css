@@ -1,0 +1,87 @@
+body{
+  font-size: 18px;
+}
+
+h2{
+  display: none;
+}
+#container{
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+#titleBar{
+  width: 100%;
+  height: 40px;
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  text-align: center;
+  background-color: #777777;
+  color: #d0d0d0;
+}
+
+#menuBtn{
+  height: 26px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+}
+
+#menuCheck{
+  display: none;
+}
+/*学了点黑魔法，反正是实现了效果*/
+#menuCheck:checked + label>img{
+  /*实际上这里有个很大的漏洞，发光的时候不一定就是用户列表展开的时候
+  只是默认起始是刚好吻合的，切换也是同步的，如果因为操作过快或者网络问题，会出现相反的情况。
+  本来这应该和另一个逻辑绑定，但是比较麻烦，效率不高*/
+  /*写完上面这段注释就想到了怎么绑定...onchange监听替代onclick就行了啊...*/
+  -webkit-filter: drop-shadow(0px 0px 5px #ececec);
+          filter: drop-shadow(0px 0px 5px #ececec);
+}
+#rightContainer{
+  height: calc(100% - 40px);
+  position: relative;
+  width: 100%;
+}
+#userList{
+  text-align: center;
+  color: #dddddd;
+  font-size: 25px;
+  background-color: #1b1b1b;
+  position: absolute;
+  top:40px;
+  width: 100%;
+  height: calc(100% - 40px - 40px);
+  opacity: 0.9;
+  overflow-y: auto;
+  z-index: 1;
+  display: none;
+}
+
+#messageList{
+  width: 100%;
+  height: calc(100% - 40px);
+  margin: 0;
+  top: 0;
+  bottom: 40px;
+  float: left;
+  overflow-y: scroll;
+  background-color: #f0f0f0;
+}
+
+#messageInput{
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  float: left;
+  resize: none;
+  background-color: #f5f5f5;
+}

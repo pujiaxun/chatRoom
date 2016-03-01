@@ -7,7 +7,7 @@ var io = require('socket.io')(server)
 
 //监听3000端口
 server.listen(3000,'127.0.0.1')
-console.log("Server listening at port 3000. ")
+console.log("Server starts")
 
 //设置静态文件默认路径
 app.use(express.static(__dirname + '/public'));
@@ -17,42 +17,47 @@ app.get('/', function(req, res) {
    res.sendFile(__dirname + '/views/index.html')
 })
 
+//我也不知道我怎么想到这黑科技的...
+//生成一个时间当做最后显示消息时间的 “时间” ，为了直接显示，提前一小时
+var lastDisplayTime = new Date(new Date()-1*60*60*1000).toString()
+
 //设置初始昵称和颜色数组
 var nicknamesList = [
   'Jack','Jason','Lisa','Alice','Sherly',
   'Winnie','Poker','Mike','Jay','Lucy','Kate'
 ]
 var colorsList = [
-  '#ff5444', '#ffac42', '#70dd5e', '#f78b00', '#79e632',
-  '#3a84e7', '#9d43db', '#50eeca', '#4c8de2', '#d44141'
+  '#ff5444', '#ffac42', '#70dd5e', '#e48307', '#89bb37',
+  '#5f98e4', '#9d43db', '#50eeca', '#316ebd', '#e6d32e','#e7206d'
 ]
 
-var usersOnline = new Array
-leaveUsersOnline = function(username,nameColor){
+var userList = []
+userLeave = function(userName,userColor){
   //回收昵称
-  nicknamesList.push(username)
-  for(var n in usersOnline){
-    t = usersOnline[n]
-    if((t.username == username)&&(t.nameColor == nameColor)){
-      usersOnline.splice(n,1)
+  nicknamesList.push(userName)
+  colorsList.push(userColor)
+  for(var n in userList){
+    t = userList[n]
+    if(t.userName == userName){
+      userList.splice(n,1)
     }
   }
 }
 //新建数组储存近十条消息
-var lastMessages = new Array
-addToLastMessages = function(username,message){
+var lastMessages = []
+addToLastMessages = function(userName,message){
   lastMessages.push({
-    username: username,
-    message: message,
-    nameColor: 'gray'
+    userName: userName,
+    userColor: '#888888',
+    message: message
   })
   //如果超过十条则删除第二个元素
   if (lastMessages.length>11){
     lastMessages.splice(1,1)
   }
 }
-//增加一个初始信息，懒得改addMessage的逻辑了
-addToLastMessages('System',{content: 'Welcome to here.', publishTime: ''})
+// 增加一个初始信息
+addToLastMessages('System',{content: '欢迎来到匿名聊天室',is_system: true})
 
 //选择名称
 selectName = function(){
@@ -60,10 +65,11 @@ selectName = function(){
     //舍弃一个名字吧，省的下面各种判定了
     return null
   }
-  color = colorsList[Math.floor(Math.random()*10)]
   randomIndex = Math.floor(Math.random()*(nicknamesList.length-1))
   name = nicknamesList[randomIndex]
+  color = colorsList[randomIndex]
   nicknamesList[randomIndex] = nicknamesList.pop()
+  colorsList[randomIndex] = colorsList.pop()
   data={name: name,color:color}
   return data
 }
@@ -71,9 +77,8 @@ selectName = function(){
 //监听socket 建立新连接时
 io.on('connection', function (socket) {
   var addedUser = false
-
   //当有新的用户访问网站
-  socket.on('add user',function(){
+  socket.on('new user',function(){
     if(addedUser) return
     //选择名称，保存起来
     newUser = selectName()
@@ -83,44 +88,44 @@ io.on('connection', function (socket) {
       socket.disconnect()
       return
     }
-    socket.username = newUser.name
-    socket.nameColor = newUser.color
+    socket.userName = newUser.name
+    socket.userColor = newUser.color
     //新用户加入到在线用户数组
-    usersOnline.push({username: socket.username,nameColor: socket.nameColor})
+    userList.push({userName: socket.userName,userColor: socket.userColor})
     socket.emit('welcome',{
         lastInfo: lastMessages,
-        clientName: socket.username,
-        nameColor: socket.nameColor,
-        users: usersOnline
+        userName: socket.userName,
+        userColor: socket.userColor,
+        users: userList,
+        lastDisplayTime: lastDisplayTime
     })
-    socket.broadcast.emit('user join',{
-      clientName: socket.username,
-      nameColor: socket.nameColor,
-      users: usersOnline
+    socket.broadcast.emit('new user',{
+      userName: socket.userName,
+      userColor: socket.userColor,
+      users: userList
     })
     addedUser = true
   })
 
   socket.on('new message',function(data){
-    console.log(socket.username+" 发消息啦")
     socket.broadcast.emit('new message',{
-        username: socket.username,
-        nameColor: socket.nameColor,
+        userName: socket.userName,
+        userColor: socket.userColor,
         message: data
     })
-    addToLastMessages(socket.username,data)
+    addToLastMessages(socket.userName,data)
+    lastDisplayTime = data.lastDisplayTime
   })
 
   socket.on('disconnect',function(data){
     if(addedUser){
-      console.log(socket.username+' 断开连接啦')
-      leaveUsersOnline(socket.username,socket.nameColor)
+      userLeave(socket.userName,socket.userColor)
       socket.broadcast.emit('user left',{
-        clientName: socket.username,
-        nameColor: socket.nameColor,
-        users: usersOnline
+        userName: socket.userName,
+        userColor: socket.userColor,
+        users: userList
       })
     }
   })
 
-});
+})

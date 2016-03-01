@@ -1,6 +1,6 @@
 {
   "name": "chat_room",
-  "version": "1.2.0",
+  "version": "2.1.0",
   "description": "A simple chat room server.",
   "main": "index.js",
   "scripts": {

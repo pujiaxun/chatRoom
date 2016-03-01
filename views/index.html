@@ -1,56 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html ontouchmove="event.preventDefault()">
   <head>
-    <meta charset="utf-8">
     <title>Chat Room</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="Bookmark" href="favicon.ico">
-    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="Bookmark"      href="favicon.ico">
     <link rel="stylesheet"  href="style.css">
+    <link rel="stylesheet" media="screen and (orientation:portrait)"  href="portrait.css">
+    <link rel="stylesheet" media="screen and (orientation:landscape)" href="landscape.css">
   </head>
-  <body onLoad="document.getElementById('inputMessage').focus()">
-    <div class="pages container " id="page">
-        <div class="col-md-3" id="userArea">
-          <h3>Online Users：{{users.length}}</h3>
-          <ul class="users" v-for="user in users">
-            <li>
-              <span v-bind:style="{ color: user.nameColor}">〇</span>
-              <span>{{ user.username }}</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-md-9" id="chatArea">
-          <div id="notify" v-if="notification" transition="fade">
-            <h2>{{notification}}</h2>
-          </div>
-          <div id="messagesArea" >
-            <ul class="dl-horizontal messages" v-for="msg in messages">
-              <li class="dialogs">
-                <span v-bind:style="{ color: msg.nameColor }">
-                  {{ msg.username }}
-                  <span style="opacity:0.8;" v-bind:style="{ color: msg.nameColor }" >{{ msg.message.publishTime }}</span>
-                </span>
-                <div class="">
-                  {{ msg.message.content }}
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <textarea id="inputMessage"   v-model="inputMessage" @keyup.enter="sendMessage"
-              placeholder="Say something...Press Enter to send" class="form-control ">
-            </textarea>
-            <!-- <input type="button" id="sendBtn" class="btn form-control" value="Send" @click="sendMessage"> -->
-          </div>
-        </div>
+  <body onLoad="document.getElementById('messageInput').focus()" >
+    <div id="container">
+      <div id="titleBar">
+        <span><strong>ChatRoom</strong></span>
+        <input type="checkbox" name="name" id="menuCheck" @change="menuSwitch">
+        <label for="menuCheck">
+          <img src="menu.png" id="menuBtn" />
+        </label>
       </div>
-
+      <div id="userList">
+        <h2>当前在线: {{users.length}}</h2>
+        <h3>我的昵称: <strong v-bind:style="{color: myColor}" >{{ myName }}</strong></h3>
+        <ul v-for="user in users">
+          <li><span v-bind:style="{color: user.userColor}">〇</span> <span>{{ user.userName }}</span></li>
+        </ul>
+      </div>
+      <div id="rightContainer">
+        <div id="messageList" ontouchmove="event.stopPropagation()">
+          <div v-for="msg in messages">
+            <div class="time-container" v-show="!msg.message.is_system && msg.message.is_time">
+              <div class="time-message">
+                {{ msg.message.publicTime }}
+              </div>
+            </div>
+            <div  class="message" >
+              <div v-bind:style="{color: msg.userColor}" class="wrap"
+              v-show="msg.message.is_other">{{ msg.userName }}</div>
+              <div v-bind:class="{'self-message': msg.message.is_self,
+                                  'other-message': msg.message.is_other,
+                                  'system-message': msg.message.is_system
+                                }">
+                {{ msg.message.content }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <input id="messageInput" type="text" value=""
+        @keyup.enter="sendMessage" placeholder="请输入内容，Enter发送...">
+      </div>
+    </div>
   </body>
   <script type="text/javascript" src="vue.js" ></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="main.js" ></script>
-  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </html>
