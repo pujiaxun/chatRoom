@@ -12,9 +12,7 @@ body{
   font-family: "Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;
   word-break:break-all;
 }
-h2{
-  color: #4b4b4b;
-}
+
 
 ul,
 li{
@@ -23,7 +21,6 @@ li{
   word-break:break-all;
   margin: 15px;
   text-align: left;
-  color: #4b4b4b;
 }
 
 

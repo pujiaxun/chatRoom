@@ -14,11 +14,15 @@
   <body onLoad="document.getElementById('messageInput').focus()" >
     <div id="container">
       <div id="titleBar">
-        <span>ChatRoom</span>
+        <span><strong>ChatRoom</strong></span>
+        <input type="checkbox" name="name" id="menuCheck" @change="menuSwitch">
+        <label for="menuCheck">
+          <img src="menu.png" id="menuBtn" />
+        </label>
       </div>
       <div id="userList">
-        <h2>昵称: <strong v-bind:style="{color: myColor}" >{{ myName }}</strong></h2>
         <h2>当前在线: {{users.length}}</h2>
+        <h3>我的昵称: <strong v-bind:style="{color: myColor}" >{{ myName }}</strong></h3>
         <ul v-for="user in users">
           <li><span v-bind:style="{color: user.userColor}">〇</span> <span>{{ user.userName }}</span></li>
         </ul>

@@ -85,6 +85,11 @@ var vm = new Vue({
       var hour = (Array(2).join(0)+h).slice(-2)
       var min = (Array(2).join(0)+m).slice(-2)
       return y + '-' + mon + '-' + d + ' '+hour + ':' + min
+    },
+    menuSwitch: function(){
+      var menu = document.getElementById('userList')
+      var checkbox = document.getElementById('menuCheck')
+      menu.style.display =  checkbox.checked ? 'block': 'none'
     }
   }
 })
