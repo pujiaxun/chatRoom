@@ -1,27 +1,17 @@
 <!DOCTYPE html>
-<html ontouchmove="event.preventDefault()">
+<html>
   <head>
     <title>Chat Room</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="Bookmark" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" media="screen and (orientation:portrait)" href="portrait.css">
-    <link rel="stylesheet" media="screen and (orientation:landscape)" href="landscape.css">
+    <link rel="stylesheet" href="index.css">
   </head>
   <body onLoad="document.getElementById('messageInput').focus()">
     <div id="container">
-      <div id="titleBar">
-        <span>
-          <strong>ChatRoom</strong>
-        </span>
-        <input type="checkbox" name="name" id="menuCheck" @change="menuSwitch">
-        <label for="menuCheck">
-          <img src="menu.png" id="menuBtn"/>
-        </label>
-      </div>
       <div id="userList">
         <h2>当前在线:
           {{users.length}}</h2>
@@ -36,7 +26,7 @@
         </ul>
       </div>
       <div id="rightContainer">
-        <div id="messageList" ontouchmove="event.stopPropagation()">
+        <div id="messageList">
           <div v-for="msg in messages">
             <div class="time-container" v-show="!msg.message.is_system && msg.message.is_time">
               <div class="time-message">
@@ -58,6 +48,8 @@
       </div>
     </div>
   </body>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="vue.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="main.js"></script>

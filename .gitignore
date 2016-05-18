@@ -1,2 +1,5 @@
 #node模块
 node_modules/
+
+#gulp生成的css
+public/
